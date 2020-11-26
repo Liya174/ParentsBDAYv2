@@ -79,19 +79,28 @@ function initSlider() {
 
     //переключение при нажатии на кнопку право/лево
     function chooseNextImage(event) {
+        console.log(event.type);
         stopAutoplay();
         setAutoplay();
-        const choisedButton = event.target; //нажатая кнопка
-        const choisedKey = event.key; //нажатая клавиша
+        let choisedButton = event.target; //нажатая кнопка
+        let choisedKey = event.key; //нажатая клавиша
         const length = document.querySelectorAll('.slider-image').length;
         let currentIndex = +document.querySelector('.active').dataset.number;
         let nextIndex;
-    
-        if (choisedButton.classList.contains('right') ||
-        choisedKey === "ArrowRight") {
-            nextIndex = (currentIndex === length - 1) ? 0 : currentIndex + 1;
-        } else {
-            nextIndex = (currentIndex === 0) ? length - 1 : currentIndex - 1;
+        
+        if (event.type === 'click') {
+            if (choisedButton.classList.contains('right')) {
+                nextIndex = (currentIndex === length - 1) ? 0 : currentIndex + 1;
+            } else {
+                nextIndex = (currentIndex === 0) ? length - 1 : currentIndex - 1;
+            }
+        }
+        if (event.type === 'keydown') {
+            if (choisedKey === "ArrowRight") {
+                nextIndex = (currentIndex === length - 1) ? 0 : currentIndex + 1;
+            } else {
+                nextIndex = (currentIndex === 0) ? length - 1 : currentIndex - 1;
+            }
         }
         
         moveSlider(nextIndex);
